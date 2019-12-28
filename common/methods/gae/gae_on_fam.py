@@ -70,7 +70,7 @@ class GraddescentMinibatch(object):
             self.inc_updates[self.incs[_param]] = self.momentum * self.incs[_param] - self.learningrate * self.model.layer.learningrate_modifiers[_param.name] * _grad 
             self.updates[_param] = _param + self.incs[_param]
 
-        givens = [(self.model.inputs:self.data[self.index*self.batchsize:(self.index+1)*self.batchsize])]
+        givens = {self.model.inputs:self.data[self.index*self.batchsize:(self.index+1)*self.batchsize]}
         self._updateincs = theano.function([self.index], self.model._cost, 
                                      updates = OrderedDict(self.inc_updates),
                 givens = OrderedDict(givens))

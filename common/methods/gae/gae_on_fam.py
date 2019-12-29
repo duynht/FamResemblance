@@ -104,8 +104,8 @@ def main(args):
 
     mat = scipy.io.loadmat(ifile)
 
-    train_features_x = numpy.float32(mat['x'])
-    train_features_y = numpy.float32(mat['y'])
+    train_features_x = numpy.float64(mat['x'])
+    train_features_y = numpy.float64(mat['y'])
 
     #NORMALIZE DATA:
     if doNorm == 1:
@@ -125,8 +125,8 @@ def main(args):
 
     print train_features_x.shape
     print train_features_y.shape
-    train_features_numpy = numpy.concatenate((train_features_x, train_features_y), 1, dtype=numpy.float32)
-    train_features = T.cast(theano.shared(train_features_numpy),'float32')
+    train_features_numpy = numpy.concatenate((train_features_x, train_features_y), 1)
+    train_features = T.cast(theano.shared(train_features_numpy),'float64')
     print train_features.type
     print '... done'
 

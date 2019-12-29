@@ -40,17 +40,17 @@ addpath(genpath('../common'));
 
 % Process RAW Fam101 Data and Extract Features for all Data
 % Specify Fam101 Dataset Location after download.
-dataPath = 'F:\Documents\Archive\Research\Vision Lab\Projects\FamilyRec\data\101\Family101_150x120';
-outPath = 'F:\Documents\Archive\Research\Vision Lab\Projects\FamilyRec\data\101\test_toolbox\fam101_feat';
+dataPath = '../Dataset/Family101_150x120';
+outPath = './test_toolbox/fam101_feat';
 prepareFam101;
 
 % Create Training/Testing Splits
 % Path to data processed in previous stage
-dataPath = 'F:\Documents\Archive\Research\Vision Lab\Projects\FamilyRec\data\101\test_toolbox\fam101_feat';
+dataPath = './test_toolbox/fam101_feat';
 % Output Path for Train Data
-outPath = 'F:\Documents\Archive\Research\Vision Lab\Projects\FamilyRec\data\101\test_toolbox\traindata';
+outPath = './test_toolbox/traindata';
 % Output Path for Test Data
-outPath2 = 'F:\Documents\Archive\Research\Vision Lab\Projects\FamilyRec\data\101\test_toolbox\testdata';
+outPath2 = './test_toolbox/testdata';
 % Final Location of Combined Training/Testing Data
 resDir = './data';
 trainTestSplits;

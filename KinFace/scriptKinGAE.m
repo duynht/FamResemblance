@@ -285,7 +285,7 @@ for ilearning = learnRateDisc
 
                         % Train Linear SVM
                         if doLinear
-                            svmModel = svmtrain(double([trnLabs;ntrnLabs]), double([trnH;ntrnH]), '-s 0 -t 0 -q');     % Linear SVM
+                            svmModel = fitcsvm(double([trnLabs;ntrnLabs]), double([trnH;ntrnH]), '-s 0 -t 0 -q');     % Linear SVM
                         else
                             % For RBF kernel we need to do parameter search.
                             disp('Performing Greedy Parameter Search');
@@ -316,11 +316,11 @@ for ilearning = learnRateDisc
                             end
                             [val,mind] = max(tacc);
                             bestParams = params(mind,:);
-                            svmModel = svmtrain([trnLabs;ntrnLabs], [trnH;ntrnH], sprintf('-c %d -g %f -q', bestParams(1), bestParams(2)));
+                            svmModel = fitcsvm([trnLabs;ntrnLabs], [trnH;ntrnH], sprintf('-c %d -g %f -q', bestParams(1), bestParams(2)));
                         end
 
                         % Test SVM
-                        [predLabs, nothing, decVals] = svmpredict(double(tstLabs), double(tstH), svmModel,'-q');
+                        [predLabs, nothing, decVals] = predict(double(tstLabs), double(tstH), svmModel,'-q');
 
                         predLabs = greedyAcc(decVals(:,1),tstLabs,0.01);
 

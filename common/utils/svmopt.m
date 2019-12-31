@@ -2,9 +2,9 @@
 function [error] = svmopt(params, trainIds, trainImgs, testIds, testImgs)
 
 trainParams = sprintf('-c %d -g %f -q', params(1), params(2));
-model = fitcsvm(trainIds, trainImgs, trainParams);
+model = svmtrain(trainIds, trainImgs, trainParams);
 
-[predLabs, tempAcc, decVals] = predict(testIds, testImgs, model, '-q');
+[predLabs, tempAcc, decVals] = svmpredict(testIds, testImgs, model, '-q');
 
 % fprintf('-c %d -g %f : acc : %0.04f\n', params(1), params(2),acc);
 

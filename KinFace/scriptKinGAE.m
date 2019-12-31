@@ -216,7 +216,9 @@ for ilearning = learnRateDisc
                     
                     trnFile = fullfile(resDir,[inFile(1:end-4) '_trn_p8.mat']);
                     mapFile = fullfile(resDir,[inFile(1:end-4) '_trn_map_p8.mat']);
-                    save(trnFile,'x','y');
+                    % "-v7" is used in Octave only
+                    % save("-v7",trnFile,'x','y');
+                   save(trnFile,'x','y'); 
                     
                     disp('Learning Feature Metric');
                     if multiview
@@ -285,7 +287,7 @@ for ilearning = learnRateDisc
 
                         % Train Linear SVM
                         if doLinear
-                            svmModel = fitcsvm(double([trnLabs;ntrnLabs]), double([trnH;ntrnH]), '-s 0 -t 0 -q');     % Linear SVM
+                            svmModel = svmtrain(double([trnLabs;ntrnLabs]), double([trnH;ntrnH]), '-s 0 -t 0 -q');     % Linear SVM
                         else
                             % For RBF kernel we need to do parameter search.
                             disp('Performing Greedy Parameter Search');
@@ -316,11 +318,11 @@ for ilearning = learnRateDisc
                             end
                             [val,mind] = max(tacc);
                             bestParams = params(mind,:);
-                            svmModel = fitcsvm([trnLabs;ntrnLabs], [trnH;ntrnH], sprintf('-c %d -g %f -q', bestParams(1), bestParams(2)));
+                            svmModel = svmtrain([trnLabs;ntrnLabs], [trnH;ntrnH], sprintf('-c %d -g %f -q', bestParams(1), bestParams(2)));
                         end
 
                         % Test SVM
-                        [predLabs, nothing, decVals] = predict(double(tstLabs), double(tstH), svmModel,'-q');
+                        [predLabs, nothing, decVals] = svmpredict(double(tstLabs), double(tstH), svmModel,'-q');
 
                         predLabs = greedyAcc(decVals(:,1),tstLabs,0.01);
 
